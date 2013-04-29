@@ -31,7 +31,7 @@ PLUGIN=msgq-pidgin
 $(PLUGIN).so: $(PLUGIN).c
 	$(CC) $(PLUGIN).c $(CFLAGS) $(INCLUDES) $(LDFLAGS) -o $(PLUGIN).so
 
-install: $(PLUGIN).so message.o
+install: $(PLUGIN).so
 	cp $(PLUGIN).so ~/.purple/plugins/
 
 message.o: message.c
