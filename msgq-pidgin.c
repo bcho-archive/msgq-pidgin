@@ -87,11 +87,24 @@ static void msg_send(char *addr, int port, const char *msg,
     sockfd_close(fd);
 }
 
+static gboolean purple_status_is_avaliable(PurpleStatus *status)
+{
+    PurpleStatusPrimitive primitive = PURPLE_STATUS_UNSET;
+
+    if (!status)
+        return FALSE;
+
+    primitive = purple_status_type_get_primitive(purple_status_get_type(status));
+
+    return (primitive == PURPLE_STATUS_AVAILABLE);
+}
+
 static void msg_received(PurpleAccount *account, char *sender, char *message,
                          PurpleConversation *conv, PurpleMessageFlags flags)
 {
     char *topic, *mod, *host, *_port;
     int port;
+    PurpleStatus *status;
 
     topic = (char *) purple_prefs_get_string("/plugins/gtk/"PLUGIN_ID"/topic");
     mod = (char *) purple_prefs_get_string("/plugins/gtk/"PLUGIN_ID"/mod");
@@ -104,7 +117,10 @@ static void msg_received(PurpleAccount *account, char *sender, char *message,
     purple_debug_info(PLUGIN_NAME, topic);
     purple_debug_info(PLUGIN_NAME, mod);
 
-    msg_send(host, port, (const char *) message, topic, mod);
+    status = purple_account_get_active_status(account);
+    if (status != NULL && !purple_status_is_avaliable(status)) {
+        msg_send(host, port, (const char *) message, topic, mod);
+    }
 }
 
 static GtkWidget *plugin_config_frame(PurplePlugin *plugin)
