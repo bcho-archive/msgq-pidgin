@@ -1,6 +1,6 @@
 #define PURPLE_PLUGINS
 
-#define VERSION "0.0.1"
+#define VERSION "0.0.2"
 #define PLUGIN_ID "gtk-msgq-comnot"
 #define PLUGIN_NAME "msgq-pidgin"
 
@@ -138,10 +138,10 @@ static GtkWidget *plugin_config_frame(PurplePlugin *plugin)
                                "/plugins/gtk/"PLUGIN_ID"/ip", sg);
     pidgin_prefs_labeled_entry(vbox, "Port",
                                "/plugins/gtk/"PLUGIN_ID"/port", sg);
-    pidgin_prefs_labeled_entry(vbox, "Topic",
-                               "/plugins/gtk/"PLUGIN_ID"/topic", sg);
     pidgin_prefs_labeled_entry(vbox, "Mod",
                                "/plugins/gtk/"PLUGIN_ID"/mod", sg);
+    pidgin_prefs_labeled_entry(vbox, "Topic",
+                               "/plugins/gtk/"PLUGIN_ID"/topic", sg);
 
     gtk_widget_show_all(frame);
     return frame;
